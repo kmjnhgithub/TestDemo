@@ -19,25 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         // 創建你的視圖控制器
-        let viewController = SiteViewController()
+        let viewController = MainTabBarViewController()
         
-        // 創建 UINavigationController，並把剛剛建立的 ViewController 當作 root view controller
-        let navigationController = UINavigationController(rootViewController: viewController)
-        
-        // 設定 UIWindow 的 rootViewController 為 UINavigationController
-        window?.rootViewController = navigationController
+        // 設定 UIWindow 的 rootViewController 為 MainTabBarViewController()
+        window?.rootViewController = viewController
         
         // 使此窗口成為主窗口並顯示它
         window?.makeKeyAndVisible()
     }
-    
-//    private func navigationBarConfiguration (_ controller: UINavigationController) {
-//        controller.navigationBar.prefersLargeTitles = true
-//        controller.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        controller.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        controller.navigationBar.tintColor = .white
-//        controller.navigationBar.backgroundColor = UIColor.systemBlue
-//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

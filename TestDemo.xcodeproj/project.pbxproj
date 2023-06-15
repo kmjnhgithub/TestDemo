@@ -24,6 +24,8 @@
 		820B65E42A3AB2000072F60E /* SiteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B65E32A3AB2000072F60E /* SiteDetailViewModel.swift */; };
 		820B65E62A3AB3220072F60E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B65E52A3AB3220072F60E /* DetailViewController.swift */; };
 		820B65E82A3AC05C0072F60E /* PlentDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B65E72A3AC05C0072F60E /* PlentDetailViewModel.swift */; };
+		820B65EA2A3AEFE80072F60E /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B65E92A3AEFE80072F60E /* MainTabBarViewController.swift */; };
+		820B65EC2A3AF25B0072F60E /* PlentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B65EB2A3AF25B0072F60E /* PlentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		820B65E32A3AB2000072F60E /* SiteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteDetailViewModel.swift; sourceTree = "<group>"; };
 		820B65E52A3AB3220072F60E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		820B65E72A3AC05C0072F60E /* PlentDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlentDetailViewModel.swift; sourceTree = "<group>"; };
+		820B65E92A3AEFE80072F60E /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		820B65EB2A3AF25B0072F60E /* PlentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 			children = (
 				820B65C92A399CE70072F60E /* SiteViewController.swift */,
 				820B65E52A3AB3220072F60E /* DetailViewController.swift */,
+				820B65E92A3AEFE80072F60E /* MainTabBarViewController.swift */,
+				820B65EB2A3AF25B0072F60E /* PlentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -218,11 +224,13 @@
 				820B65E22A3AAC340072F60E /* PlentViewModel.swift in Sources */,
 				820B65D72A39C49F0072F60E /* SiteViewModel.swift in Sources */,
 				820B65CA2A399CE70072F60E /* SiteViewController.swift in Sources */,
+				820B65EA2A3AEFE80072F60E /* MainTabBarViewController.swift in Sources */,
 				820B65E62A3AB3220072F60E /* DetailViewController.swift in Sources */,
 				820B65D32A39B4080072F60E /* SiteResponse.swift in Sources */,
 				820B65E82A3AC05C0072F60E /* PlentDetailViewModel.swift in Sources */,
 				820B65B42A3962B00072F60E /* AppDelegate.swift in Sources */,
 				820B65B62A3962B00072F60E /* SceneDelegate.swift in Sources */,
+				820B65EC2A3AF25B0072F60E /* PlentViewController.swift in Sources */,
 				820B65E02A39F7090072F60E /* PlentResponse.swift in Sources */,
 				820B65D52A39C0240072F60E /* MainTableViewCell.swift in Sources */,
 				820B65E42A3AB2000072F60E /* SiteDetailViewModel.swift in Sources */,
