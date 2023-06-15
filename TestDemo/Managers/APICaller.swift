@@ -34,7 +34,7 @@ class APICaller {
             do {
                 let results = try decoder.decode(APIResponse.self, from: data)
                 completion(.success(results.result.results))
-                print(results.result.results)
+//                print(results.result.results)
             } catch {
                 completion(.failure(APIError.failedTogetData))
             }

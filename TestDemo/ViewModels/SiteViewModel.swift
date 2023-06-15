@@ -12,4 +12,5 @@ struct SiteViewModel {
     let ePicUrl: String
     let eName: String
     let eInfo: String
+    let eMemo: String
 }
