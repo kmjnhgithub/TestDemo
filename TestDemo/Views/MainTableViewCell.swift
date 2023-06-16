@@ -110,7 +110,8 @@ class MainTableViewCell: UITableViewCell {
         let arrowButtonConstraints = [
 //            arrowButton.widthAnchor.constraint(equalToConstant: 50),
             arrowButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20), // 緊貼在 contentView 右邊，間隔 -20 單位
-            arrowButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor) // 垂直置中於 contentView
+            arrowButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor), // 垂直置中於 contentView
+            arrowButton.widthAnchor.constraint(equalToConstant: 10)
         ]
         
         // 啟用佈局約束
