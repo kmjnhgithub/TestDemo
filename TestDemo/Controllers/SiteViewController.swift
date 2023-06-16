@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class SiteViewController: UIViewController {
     
-    private var sites: [SiteResponse] = [SiteResponse]()
+    private var sitesSubject = BehaviorSubject<[SiteResponse]>(value: [])
+    private var disposeBag = DisposeBag()
     
     private let mainTable: UITableView = {
         let table = UITableView()
@@ -27,15 +30,35 @@ class SiteViewController: UIViewController {
         title = "台北市立動物園"
         
         view.addSubview(mainTable)
-        mainTable.delegate = self
-        mainTable.dataSource = self
+
         
         fetchData()
+        bindTableView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         mainTable.frame = view.bounds // 最終把 upcomingTable 加入view裏面並符合view的邊界
+    }
+    
+    //  RxSwift 以及 RxCocoa 的方法來設定 UITableView 的 delegate 和 datasource
+    func bindTableView() {
+        mainTable.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        // 為 mainTable 的選擇事件添加了一個訂閱
+        mainTable.rx.modelSelected(SiteResponse.self).subscribe(onNext: { [weak self] site in
+            guard site.eName != nil else {return}
+            
+            let vc = DetailViewController()
+            vc.hidesBottomBarWhenPushed = true  // 在此設定
+            vc.configure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: disposeBag)
+        
+        // 
+        sitesSubject.bind(to: mainTable.rx.items(cellIdentifier: MainTableViewCell.identifier, cellType: MainTableViewCell.self)) { (row, site, cell) in
+            cell.configure(with: SiteViewModel(ePicUrl: site.httpsPicUrl ?? "", eName: site.eName ?? "", eInfo: site.eInfo ?? "", eMemo: site.eMemo ?? ""))
+        }.disposed(by: disposeBag)
     }
     
 
@@ -65,11 +88,7 @@ class SiteViewController: UIViewController {
         APICaller.shared.getZooDataAPI{ [weak self] result in
             switch result {
             case .success(let sites):
-                self?.sites = sites
-                DispatchQueue.main.async {
-                    self?.mainTable.reloadData()
-                }
-                
+                self?.sitesSubject.onNext(sites)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -79,43 +98,9 @@ class SiteViewController: UIViewController {
 }
 
 
-extension SiteViewController: UITableViewDelegate, UITableViewDataSource {
-    // numberOfRowsInSection
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sites.count
-    }
-    
-    // cellForRowAt 主要繪製cell裡面的畫面配置
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else {
-            return UITableViewCell()
-        }
-        
-        let site = sites[indexPath.row]
-        
-        cell.configure(with: SiteViewModel(ePicUrl: site.httpsPicUrl ?? "", eName: site.eName ?? "", eInfo: site.eInfo ?? "", eMemo: site.eMemo ?? ""))
-        
-
-        return cell
-    }
-    
-    // heightForRowAt
+extension SiteViewController: UITableViewDelegate {
+    // 設定行高
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
-    }
-    
-//     didSelectRowAt 處理cell被點選的事件
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // 以動畫的方式取消選中指定的cell。
-
-        let site = sites[indexPath.row]
-
-        guard site.eName != nil else {return}
-        
-        let vc = DetailViewController()
-        vc.hidesBottomBarWhenPushed = true  // 在此設定
-        vc.configure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
-        self.navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
