@@ -95,7 +95,7 @@ extension SiteViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.configure(with: SiteViewModel(ePicUrl: site.httpsPicUrl ?? "", eName: site.eName ?? "", eInfo: site.eInfo ?? "", eMemo: site.eMemo ?? ""))
         
-//        cell.configure(with: Site(titleName: title.original_title ?? title.original_name ?? "Unknow", posterURL: title.poster_path ?? ""))
+
         return cell
     }
     
@@ -111,11 +111,11 @@ extension SiteViewController: UITableViewDelegate, UITableViewDataSource {
         let site = sites[indexPath.row]
 
         guard site.eName != nil else {return}
-
-        DispatchQueue.main.async {
-            let vc = DetailViewController()
-//            vc.configure(with: SiteDetailViewModel())
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        
+        let vc = DetailViewController()
+        vc.hidesBottomBarWhenPushed = true  // 在此設定
+        vc.configure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }

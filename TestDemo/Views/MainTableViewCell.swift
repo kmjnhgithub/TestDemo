@@ -121,7 +121,7 @@ class MainTableViewCell: UITableViewCell {
     
     public func configure(with model: SiteViewModel) {
 
-        guard let url = URL(string: "\(model.ePicUrl)") else {
+        guard let url = URL(string: "\(model.ePicUrl ?? "")") else {
             return
         }
         sitePosterUIImageView.sd_setImage(with: url, completed: nil) // 使用SDWebImage庫來非同步加載圖片

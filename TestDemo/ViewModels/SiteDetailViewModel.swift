@@ -8,5 +8,9 @@
 import Foundation
 
 struct SiteDetailViewModel {
-    
+    let ePicUrl: String?
+    let eName: String?
+    let eInfo: String?
+    let eMemo: String?
+    let eCategory: String?
 }
