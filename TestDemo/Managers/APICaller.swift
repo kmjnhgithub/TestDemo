@@ -42,26 +42,4 @@ class APICaller {
         
         task.resume()
     }
-    
-//    func getPlentDataAPI(with query: String, completion: @escaping (Result<VideoElement, Error>) -> Void) {
-//
-//        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-//        guard let url = URL(string:"\(Constants.YoutubeBaseURL)q=\(query)&key=\(Constants.YoutubeAPI_KEY)") else {return}
-//        print(url)
-//
-//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//            guard let data = data, error == nil else {return}
-//            let decoder = JSONDecoder()
-//
-//            do {
-//                let results = try decoder.decode(YoutubeSearchResponse.self, from: data)
-//                completion(.success(results.items[0]))
-//                print(results)
-//            } catch {
-//                completion(.failure(error))
-//                print(error)
-//            }
-//        }
-//        task.resume()
-//    }
 }

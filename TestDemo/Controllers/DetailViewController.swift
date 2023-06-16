@@ -8,7 +8,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var categoryTitle: String = ""
+    var siteNameTitle: String = ""
     
     // add a scrollView
     private let scrollView: UIScrollView = {
@@ -90,7 +90,7 @@ class DetailViewController: UIViewController {
         // 將返回按鈕的標題設為空
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        title = categoryTitle
+        title = siteNameTitle
     }
     
     @objc func buttonTapped() {
@@ -165,7 +165,7 @@ class DetailViewController: UIViewController {
         }
         
         siteDetailPosterUIImageView.sd_setImage(with: url, completed: nil)
-        categoryTitle = model.eCategory ?? ""
+        siteNameTitle = model.eName ?? ""
         infoLabel.text = model.eInfo ?? ""
         memoLabel.text = model.eMemo ?? ""
         categoryLabel.text = model.eCategory ?? ""
