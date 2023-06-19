@@ -9,10 +9,7 @@ import Foundation
 
 
 struct PlentViewModel {
-    let importDate: ImportDate?
-    let eName: String?
-    let ePicUrl: String?
-    let eInfo: String?
-    let eMemo: String?
-    let eUrl: String?
+    let nameCh: String?
+    let alsoKnown: String?
+    let pic01URL: String?
 }

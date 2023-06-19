@@ -120,15 +120,15 @@ class MainTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(arrowButtonConstraints)
     }
     
-    public func configure(with model: SiteViewModel) {
+    public func configure(with siteModel: SiteViewModel?, with plentModel: PlentViewModel?) {
 
-        guard let url = URL(string: "\(model.ePicUrl ?? "")") else {
+        guard let url = URL(string: "\(siteModel?.ePicUrl ?? plentModel?.pic01URL ?? "")") else {
             return
         }
         sitePosterUIImageView.sd_setImage(with: url, completed: nil) // 使用SDWebImage庫來非同步加載圖片
-        siteLabel.text = model.eName
-        infoLabel.text = model.eInfo
-        memoLabel.text = model.eMemo
+        siteLabel.text = siteModel?.eName ?? plentModel?.nameCh
+        infoLabel.text = siteModel?.eInfo ?? plentModel?.alsoKnown
+        memoLabel.text = siteModel?.eMemo ?? ""
     }
     
     required init?(coder: NSCoder) {

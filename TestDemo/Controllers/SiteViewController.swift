@@ -38,27 +38,40 @@ class SiteViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        mainTable.frame = view.bounds // 最終把 upcomingTable 加入view裏面並符合view的邊界
+        mainTable.frame = view.bounds // 最終把 mainTable 加入view裏面並符合view的邊界
     }
     
     //  RxSwift 以及 RxCocoa 的方法來設定 UITableView 的 delegate 和 datasource
     func bindTableView() {
+        // 使用RxSwift的setDelegate函數為mainTable設定委託，這樣就可以使用RxSwift的響應式編程風格處理表格視圖事件
         mainTable.rx.setDelegate(self).disposed(by: disposeBag)
         
-        // 為 mainTable 的選擇事件添加了一個訂閱
+        // 為mainTable的選擇事件添加一個訂閱。每當表格視圖的一個單元格被選中，都會發出一個新的site（SiteResponse類型）
         mainTable.rx.modelSelected(SiteResponse.self).subscribe(onNext: { [weak self] site in
+            
+            // 確保self（SiteViewController）還存在並且表格視圖有一個選中的單元格。如果這兩者之一不存在，則不進行任何操作並返回
+            guard let self = self, let selectedIndexPath = self.mainTable.indexPathForSelectedRow else { return }
+            
+            // 以動畫的形式取消選中該行
+            self.mainTable.deselectRow(at: selectedIndexPath, animated: true)
+            
+            // 確保site有一個名稱。如果它沒有名稱，則不進行任何操作並返回
             guard site.eName != nil else {return}
             
-            let vc = DetailViewController()
-            vc.hidesBottomBarWhenPushed = true  // 在此設定
-            vc.configure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }).disposed(by: disposeBag)
+            // 創建一個SiteDetailViewController並為其配置SiteDetailViewModel
+            let vc = SiteDetailViewController()
+            vc.hidesBottomBarWhenPushed = true
+            vc.siteConfigure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
+            
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: disposeBag) // 確保訂閱在SiteViewController釋放時被釋放，以防止記憶體泄漏
         
-        // 
+        // 使sitesSubject（BehaviorSubject）和表格視圖的單元格建立綁定。每當sitesSubject發出一個新的site列表，都會更新表格視圖的單元格
         sitesSubject.bind(to: mainTable.rx.items(cellIdentifier: MainTableViewCell.identifier, cellType: MainTableViewCell.self)) { (row, site, cell) in
-            cell.configure(with: SiteViewModel(ePicUrl: site.httpsPicUrl ?? "", eName: site.eName ?? "", eInfo: site.eInfo ?? "", eMemo: site.eMemo ?? ""))
-        }.disposed(by: disposeBag)
+            // 為每一個單元格配置一個SiteViewModel
+            cell.configure(with: SiteViewModel(ePicUrl: site.httpsPicUrl ?? "", eName: site.eName ?? "", eInfo: site.eInfo ?? "", eMemo: site.eMemo ?? ""), with: nil)
+        }.disposed(by: disposeBag) // 確保綁定在SiteViewController釋放時被釋放，以防止記憶體泄漏
     }
     
 
@@ -85,14 +98,13 @@ class SiteViewController: UIViewController {
     
     // 取得api
     private func fetchData() {
-        APICaller.shared.getZooDataAPI{ [weak self] result in
-            switch result {
-            case .success(let sites):
+        APICaller.shared.getZooDataAPI()
+            .subscribe(onNext: { [weak self] sites in
                 self?.sitesSubject.onNext(sites)
-            case .failure(let error):
+            }, onError: { error in
                 print(error.localizedDescription)
-            }
-        }
+            })
+            .disposed(by: disposeBag)
     }
   
 }
