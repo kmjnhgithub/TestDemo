@@ -108,7 +108,11 @@ class SiteDetailViewController: UIViewController {
     }
     
     @objc func buttonTapped() {
-        print("Button tapped!")
+        guard let url = URL(string: videoURL), UIApplication.shared.canOpenURL(url) else {
+                print("Invalid URL.")
+                return
+            }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     
