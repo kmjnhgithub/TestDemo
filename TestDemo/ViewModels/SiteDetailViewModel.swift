@@ -13,4 +13,5 @@ struct SiteDetailViewModel {
     let eInfo: String?
     let eMemo: String?
     let eCategory: String?
+    let eUrl: String?
 }

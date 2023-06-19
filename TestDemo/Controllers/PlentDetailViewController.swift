@@ -70,6 +70,10 @@ class PlentDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 將返回按鈕的標題設為空
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
         view.backgroundColor = .systemBackground
         title = plentNameTitle
         

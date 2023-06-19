@@ -61,7 +61,7 @@ class SiteViewController: UIViewController {
             // 創建一個SiteDetailViewController並為其配置SiteDetailViewModel
             let vc = SiteDetailViewController()
             vc.hidesBottomBarWhenPushed = true
-            vc.siteConfigure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory))
+            vc.siteConfigure(with: SiteDetailViewModel(ePicUrl: site.httpsPicUrl, eName: site.eName, eInfo: site.eInfo, eMemo: site.eMemo, eCategory: site.eCategory, eUrl: site.eUrl))
             
             
             self.navigationController?.pushViewController(vc, animated: true)

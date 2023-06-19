@@ -9,6 +9,7 @@ import UIKit
 class SiteDetailViewController: UIViewController {
     
     var siteNameTitle: String = ""
+    var videoURL = ""
     
     // add a scrollView
     private let scrollView: UIScrollView = {
@@ -58,12 +59,12 @@ class SiteDetailViewController: UIViewController {
         return label
     }()
     
-    private let videoButton: UIButton = {
+    private lazy var videoButton: UIButton = {
         let button = UIButton()
         button.setTitle("在網頁開啟", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
-        button.addTarget(SiteDetailViewController.self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -179,6 +180,7 @@ class SiteDetailViewController: UIViewController {
         }
         
         siteDetailPosterUIImageView.sd_setImage(with: url, completed: nil)
+        videoURL = model.eUrl ?? ""
         siteNameTitle = model.eName ?? ""
         infoLabel.text = model.eInfo ?? ""
         memoLabel.text = model.eMemo ?? ""
